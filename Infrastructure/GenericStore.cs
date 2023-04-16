@@ -3,7 +3,7 @@
 namespace BookStore.Infrastructure
 {
     public class GenericStore<T> : IEnumerable<T>
-        where T : class, IEquatable<T>
+        where T : class, IEquatable<T>,IEntity
     {
         T[] data = new T[0];
         public void Add(T item)
@@ -11,6 +11,11 @@ namespace BookStore.Infrastructure
             int len = data.Length;
             Array.Resize(ref data, len + 1);
             data[len] = item;
+        }
+        public T GetById(int id) 
+        {
+            var found = Array.Find(data, item => item.Id == id);
+            return found;
         }
         public void Remove(T item)
         {

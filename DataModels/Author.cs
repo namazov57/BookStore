@@ -1,8 +1,9 @@
-﻿using BookStore.StableModels;
+﻿using BookStore.Infrastructure;
+using BookStore.StableModels;
 
 namespace BookStore.DataModels
 {
-    public class Author:IEquatable<Author>
+    public class Author : IEquatable<Author>, IEntity
     {
         static int counter = 0;
         public Author() 
@@ -27,6 +28,10 @@ namespace BookStore.DataModels
         {
             return $"{Id}. {Name}.{Surname}";
         }
-       
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Author);
+        }
     }
 }

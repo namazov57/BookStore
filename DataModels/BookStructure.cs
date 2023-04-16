@@ -1,8 +1,9 @@
-﻿using BookStore.StableModels;
+﻿using BookStore.Infrastructure;
+using BookStore.StableModels;
 
 namespace BookStore.DataModels
 {
-    public class BookStructure:IEquatable<BookStructure>
+    public class BookStructure:IEquatable<BookStructure>,IEntity
     {
         static int counter = 0;
         public BookStructure()
