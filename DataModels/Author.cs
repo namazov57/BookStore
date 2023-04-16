@@ -14,7 +14,7 @@ namespace BookStore.DataModels
         public int Id { get; private set; }
         public string Name { get;  set; }
         public string Surname { get; set; }
-        public Genre genre { get; set; }    
+           
         
 
         public bool Equals(Author? other)

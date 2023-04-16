@@ -11,17 +11,12 @@ namespace BookStore
         {
 
             GenericStore<Author> authors = new GenericStore<Author>();
-
+            GenericStore<BookStructure> bookStructures = new GenericStore<BookStructure>();
             Menu m;
 
             m = Helper.ReadEnum<Menu>("Siyahidan secin: ");
-
             Console.WriteLine(m);
 
-            Genre c = Helper.ReadEnum<Genre>("Janiri siyahidan sec:");
-
-            Console.WriteLine(c);
-            
         }
     }
 }

@@ -19,7 +19,7 @@ namespace BookStore.Helpers
         l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
-            Console.WriteLine(color);
+            Console.ForegroundColor = color;
 
             if (!Enum.TryParse(typeOfEnum, Console.ReadLine(),true, out value)
                 || !Enum.IsDefined(typeOfEnum, value))

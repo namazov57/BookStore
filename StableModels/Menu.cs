@@ -2,12 +2,18 @@
 {
     public enum Menu
     {
-        AuthorGetAll=1,
-         AuthorGetById,
+        AuthorGetAll = 1,
+        AuthorGetById,
         AuthorAdd,
         AuthorEdit,
-        AuthorDelete,
         AuthorRemove,
+
+
+        BookStructureGetAll,
+        BookStructureGetById,
+        BookStructureAdd,
+        BookStructureEdit,
+        BookSturctureRemove,
 
         SaveAndExit,
 

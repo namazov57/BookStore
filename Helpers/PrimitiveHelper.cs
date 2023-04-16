@@ -10,7 +10,7 @@ public static int ReadInt(string caption)
             l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
-            Console.WriteLine(color);
+            Console.ForegroundColor = color;
 
             if (!int.TryParse(Console.ReadLine(),out value))
             {
@@ -25,7 +25,7 @@ public static int ReadInt(string caption)
         l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
-            Console.WriteLine(color);
+            Console.ForegroundColor = color;
 
             if (!decimal.TryParse(Console.ReadLine(), out value))
             {
@@ -40,7 +40,7 @@ public static int ReadInt(string caption)
         l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
-            Console.WriteLine(color);
+            Console.ForegroundColor = color;
 
             if (!ushort.TryParse(Console.ReadLine(), out value))
             {
@@ -55,7 +55,7 @@ public static int ReadInt(string caption)
         l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
-            Console.WriteLine(color);
+            Console.ForegroundColor = color;
 
             value = Console.ReadLine();
             if(string.IsNullOrWhiteSpace(value))
