@@ -3,16 +3,16 @@
     public static partial class Helper
 
     {
-public static int ReadInt(string caption)
+        public static int ReadInt(string caption)
         {
             int value;
-             var color=Console.ForegroundColor;
-            l1:
+            var color = Console.ForegroundColor;
+        l1:
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write(caption);
             Console.ForegroundColor = color;
 
-            if (!int.TryParse(Console.ReadLine(),out value))
+            if (!int.TryParse(Console.ReadLine(), out value))
             {
                 goto l1;
             }
@@ -58,7 +58,7 @@ public static int ReadInt(string caption)
             Console.ForegroundColor = color;
 
             value = Console.ReadLine();
-            if(string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 goto l1;
             }

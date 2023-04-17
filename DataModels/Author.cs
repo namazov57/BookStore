@@ -3,6 +3,7 @@ using BookStore.StableModels;
 
 namespace BookStore.DataModels
 {
+    [Serializable]
     public class Author : IEquatable<Author>, IEntity
     {
         static int counter = 0;

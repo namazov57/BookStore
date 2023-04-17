@@ -2,39 +2,57 @@
 using BookStore.Helpers;
 using BookStore.Infrastructure;
 using BookStore.StableModels;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BookStore
 {
     internal class Program
     {
+        const string dataFilePath = "database.dat";
         static GenericStore<Author> authors = new GenericStore<Author>();
         static GenericStore<BookStructure> bookStructures = new GenericStore<BookStructure>();
+
+
         static void Main(string[] args)
         {
-            authors.Add(new Author { Name = "Cingiz Abdulayev" });
-            authors.Add(new Author { Name = "Aqil Veliyev" });
-            authors.Add(new Author { Name = "Vuqar Abilov" });
+            try
+            {
+                using (var fs = File.OpenRead(dataFilePath))
+                {
+                    BinaryFormatter bf = new BinaryFormatter();
+                    Database db = bf.Deserialize(fs) as Database;
+                    if (db != null)
+                    {
+                        authors = db.Authors;
+                        bookStructures = db.bookStructures;
+                    }
+                }
+            }
+            catch(Exception) 
+            {
 
-            bookStructures.Add(new BookStructure { AuthorId = 1, Name = "Qorxu" });
-            bookStructures.Add(new BookStructure { AuthorId = 2, Name = "Detektiv" });
-            bookStructures.Add(new BookStructure { AuthorId = 3, Name = "Klassik" });
+            }
+
 
             Menu m;
-
+l1:
             int selectedId;
             Author selectedAuthor;
             BookStructure selectedBookstructure;
 
-        l1:
+        
             m = Helper.ReadEnum<Menu>("Siyahidan secin: ");
-            Console.WriteLine(m);
+            
 
 
             switch (m)
 
             {
-                case Menu.AuthorGetAll:
-                    if (authors.Count==0)
+                
+               
+            case Menu.AuthorGetAll:
+                    if (authors.Count == 0)
                     {
                         Console.WriteLine("Siyahi bosdur Muellif elave edin...");
                         goto case Menu.AuthorAdd;
@@ -94,22 +112,22 @@ namespace BookStore
 
 
                 case Menu.BookStructureGetAll:
-                    l5:
-                    if (bookStructures.Count==0)
+
+                    if (bookStructures.Count == 0)
                     {
                         Console.WriteLine("Siyahi bosdur Muellif elave edin...");
                         goto case Menu.BookStructureAdd;
                     }
-                  GetAllBookStructures(true);
-                    Console.WriteLine("Menyuya qayitmaq ucun her hansi duymeni sixin...");  
+                    GetAllBookStructures(true);
+                    Console.WriteLine("Menyuya qayitmaq ucun her hansi duymeni sixin...");
                     Console.ReadKey();
                     Console.Clear();
                     GetAllBookStructures(true);
-                    goto l5;
+                    goto l1;
                 case Menu.BookStructureGetById:
-                    
+
                     GetAllBookStructures(true);
-                    l4:
+                l4:
                     selectedId = Helper.ReadInt("Siyahidan Id secin: ");
 
                     selectedBookstructure = bookStructures.GetById(selectedId);
@@ -118,41 +136,89 @@ namespace BookStore
                         goto l4;
                     }
 
-                    
+
 
                     Console.WriteLine(selectedBookstructure);
                     Console.WriteLine("Menuya qayitmaq ucun,her hansi duymeni sixin.");
                     Console.ReadKey();
                     Console.Clear();
                     goto l1;
-                    
+
                 case Menu.BookStructureAdd:
 
-                    selectedBookstructure= new BookStructure();
-                    selectedBookstructure.Name = Helper.ReadString("Kitabin adini daxil edin: ");
+                    selectedBookstructure = new BookStructure();
                     GetAllAuthors(false);
-                l6:
+
+                l5:
                     selectedId = Helper.ReadInt("Muellifin idsini siyahidan secin..");
-                    selectedAuthor= authors.GetById(selectedId);
+                    selectedAuthor = authors.GetById(selectedId);
                     if (selectedAuthor == null)
                     {
-                        goto l6;
+                        goto l5;
                     }
                     selectedBookstructure.AuthorId = selectedId;
                     selectedBookstructure.Genre = Helper.ReadEnum<Genre>("Janiri siyahidan secin: ");
                     selectedBookstructure.PageCount = Helper.ReadUInt16("Kitab nece seyfe olacaq: ");
                     selectedBookstructure.Price = Helper.ReadDecimal("Kitabin qiymetini daxil edin: ");
 
-                bookStructures.Add(selectedBookstructure);
-                   
-                    Console.ReadKey();
-                    Console.Clear();
+                    bookStructures.Add(selectedBookstructure);
+
                     goto case Menu.BookStructureGetAll;
 
                 case Menu.BookStructureEdit:
-                    break;
+                l6:
+                    GetAllBookStructures(true);
+                    selectedId = Helper.ReadInt("Siyahidan id secin: ");
+                    selectedBookstructure = bookStructures.GetById(selectedId);
+                    if (selectedBookstructure == null)
+                    {
+                        goto l6;
+                    }
+                    selectedBookstructure.Name = Helper.ReadString("Kitabin adi: ");
+                    GetAllAuthors(false);
+                l7:
+                    selectedId = Helper.ReadInt("Muellifin idsini siyahidan secin: ");
+                    selectedAuthor = authors.GetById(selectedId);
+                    if (selectedAuthor == null)
+                    {
+                        goto l7;
+                    }
+                    selectedBookstructure.AuthorId = selectedId;
+                    Console.Clear();
+                    goto case Menu.BookStructureGetAll;
+
+
                 case Menu.BookSturctureRemove:
+
+                l8:
+                    GetAllBookStructures(true);
+                    selectedId = Helper.ReadInt("Siyahidan id secin: ");
+                    selectedBookstructure = bookStructures.GetById(selectedId);
+                    if (selectedBookstructure == null)
+                    {
+                        goto l8;
+                    }
+                    bookStructures.Remove(selectedBookstructure);
+                    Console.Clear();
+                    goto case Menu.BookStructureGetAll;
+
+                case Menu.SaveAndExit:
+
+                    using (FileStream fs = File.OpenWrite(dataFilePath))
+                    {
+                        Database db = new Database();
+
+                        db.Authors = authors;
+                        db.bookStructures = bookStructures;
+
+                        BinaryFormatter bf = new BinaryFormatter();
+                        bf.Serialize(fs, db);
+
+                    }
                     break;
+                default:
+                    break;
+
             }
 
         }
@@ -177,7 +243,7 @@ namespace BookStore
             Console.WriteLine("Kitablar...");
             foreach (var item in bookStructures)
             {
-                var author= authors.GetById(item.AuthorId);
+                var author = authors.GetById(item.AuthorId);
                 Console.WriteLine($"{author.Name}-{item}");
             }
         }

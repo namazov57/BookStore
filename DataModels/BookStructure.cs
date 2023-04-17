@@ -3,8 +3,10 @@ using BookStore.StableModels;
 
 namespace BookStore.DataModels
 {
+    [Serializable]
     public class BookStructure:IEquatable<BookStructure>,IEntity
     {
+      
         static int counter = 0;
         public BookStructure()
         {
@@ -27,8 +29,8 @@ namespace BookStore.DataModels
 
         public override string ToString()
         {
-            return $"Id: {Id}./n Name: {Name}./n AuthorId: {AuthorId}./n Genre: {Genre}./n*" +
-                $" PageCount: {PageCount}./n Price: {Price}";
+            return $"Id: {Id}.\n Name: {Name}.\n AuthorId: {AuthorId}.\n Genre: {Genre}.\n*" +
+                $"\n PageCount: {PageCount}.\n Price: {Price}";
         }
     }
 }

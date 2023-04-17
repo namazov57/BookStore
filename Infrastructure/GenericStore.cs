@@ -2,6 +2,7 @@
 
 namespace BookStore.Infrastructure
 {
+    [Serializable]
     public class GenericStore<T> : IEnumerable<T>
         where T : class, IEquatable<T>,IEntity
     {
@@ -17,6 +18,11 @@ namespace BookStore.Infrastructure
             var found = Array.Find(data, item => item.Id == id);
             return found;
         }
+        public T[] GetAll(Predicate<T> match)
+        {
+            var foundAll = Array.FindAll(data, match);
+            return foundAll;
+        }
         public void Remove(T item)
         {
             int index = Array.IndexOf(data, item);
@@ -28,9 +34,7 @@ namespace BookStore.Infrastructure
                 }
                 Array.Resize(ref data, data.Length - 1);
             }
-            int len = data.Length;
-            Array.Resize(ref data, len + 1);
-            data[len] = item;
+          
         }
         public IEnumerator<T> GetEnumerator()
         {
