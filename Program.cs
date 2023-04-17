@@ -29,29 +29,29 @@ namespace BookStore
                     }
                 }
             }
-            catch(Exception) 
+            catch (Exception)
             {
 
             }
 
 
             Menu m;
-l1:
+
             int selectedId;
             Author selectedAuthor;
             BookStructure selectedBookstructure;
 
-        
+
             m = Helper.ReadEnum<Menu>("Siyahidan secin: ");
-            
 
 
+        l1:
             switch (m)
 
             {
-                
-               
-            case Menu.AuthorGetAll:
+
+
+                case Menu.AuthorGetAll:
                     if (authors.Count == 0)
                     {
                         Console.WriteLine("Siyahi bosdur Muellif elave edin...");
