@@ -33,11 +33,12 @@ namespace BookStore
             {
 
             }
-
+l1:
 
             Menu m;
 
             int selectedId;
+            
             Author selectedAuthor;
             BookStructure selectedBookstructure;
 
@@ -45,13 +46,14 @@ namespace BookStore
             m = Helper.ReadEnum<Menu>("Siyahidan secin: ");
 
 
-        l1:
+        
             switch (m)
 
             {
 
 
                 case Menu.AuthorGetAll:
+                    
                     if (authors.Count == 0)
                     {
                         Console.WriteLine("Siyahi bosdur Muellif elave edin...");

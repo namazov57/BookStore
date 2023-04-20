@@ -29,8 +29,8 @@ namespace BookStore.DataModels
 
         public override string ToString()
         {
-            return $"Id: {Id}.\n Name: {Name}.\n AuthorId: {AuthorId}.\n Genre: {Genre}.\n*" +
-                $"\n PageCount: {PageCount}.\n Price: {Price}";
+            return $" Mueliffin adi: {Name} .\n Muellifin ID: {AuthorId}.\n Janr: {Genre}.\n*" +
+                $"\n Seyfe sayi: {PageCount}.\n Qoymeti: {Price}";
         }
     }
 }
