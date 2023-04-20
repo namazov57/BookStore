@@ -27,7 +27,7 @@ namespace BookStore.DataModels
 
         public override string ToString()
         {
-            return $"{Id}. {Name}.{Surname}";
+            return $"Id nomresi:{Id}.\nMuellifin adi: {Name}.";
         }
 
         public override bool Equals(object obj)
